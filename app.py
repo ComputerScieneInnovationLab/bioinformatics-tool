@@ -24,7 +24,7 @@ def dna_to_rna(dna):
 	return rna
 
 # To visualize the RNA sequence
-def rna_visualization(seq):
+def rna_vis(seq):
 	plt.figure(num=None, figsize=(6, 2), dpi=80, facecolor='w', edgecolor='k')
 	l = len(seq)
 	y = 0.4
@@ -37,10 +37,10 @@ def rna_visualization(seq):
 			plt.text(i,y,seq[i], color='k')
 
 	plt.axis('off')
-	plt.savefig('images/rna_plot.png')
+	st.pyplot()
 
 # To visualize DNA Sequence
-def dna_visualization(seq):
+def dna_vis(seq):
 	plt.figure(num=None, figsize=(6, 2), dpi=80, facecolor='w', edgecolor='k')
 	l = len(seq)
 	y = 0.4
@@ -53,7 +53,38 @@ def dna_visualization(seq):
 			plt.text(i,y,seq[i], color='k')
 
 	plt.axis('off')
-	plt.savefig('images/dna_plot.png')
+	st.pyplot()
+
+# To count the Amino acids
+def amino_acid_counts(seq):
+	occ_a = []
+	occ_tu = []
+	occ_g = []
+	occ_c = []
+
+	for i in rna:
+		if i == 'A':
+			occ_a.append(1)
+		if i == 'U':
+			occ_tu.append(2)
+		if i == 'G':
+			occ_g.append(3)
+		if i == 'C':
+			occ_c.append(4)
+
+
+	#x =np.array([1,1,1,3,3,5,5,4,4])
+	plt.hist(occ_a, bins=5, orientation='horizontal', color='red',label='Adenine')
+	plt.hist(occ_tu, bins=5, orientation='horizontal', color='blue',label='Uracil')
+	plt.hist(occ_g, bins=5, orientation='horizontal', color='yellow', label='Guanine')
+	plt.hist(occ_c, bins=5, orientation='horizontal', color='lime', label='Cytosine')
+
+	plt.xlabel('No of times')
+	plt.ylabel('Amino-acids')
+	plt.yticks(occ_a,"")
+	plt.legend()
+	st.pyplot()
+
 
 
 # Setting title
@@ -79,14 +110,22 @@ if option == 'DNA to RNA':
 	if dna_seq != '':
 		st.write("DNA Sequence: "+dna_seq)
 		st.write("RNA Sequence: "+dna_to_rna(dna_seq))
-		
+		rna = dna_to_rna(dna_seq)
+
 	if st.checkbox('Show RNA Visualizaion'):
-		dna_visualization(dna_seq)
-		rna_visualization(dna_to_rna(dna_seq))
-		dna_img = Image.open('images/dna_plot.png')
-		rna_img = Image.open('images/rna_plot.png')
-		st.image(dna_img, caption='DNA Sequence',use_column_width=True)
-		st.image(rna_img, caption='RNA Sequence',use_column_width=True)
+		status = st.radio("choose one ",("choose one","DNA","RNA", "Amino-acids-counts"))
+		if status == 'choose one':
+			st.write("")
+		if status == 'DNA':
+			dna_vis(dna_seq)
+		if status == 'RNA':
+			rna_vis(rna)
+		if status == 'Amino-acids-counts':
+			amino_acid_counts(rna)
+
+
+
+		
 
 
 
