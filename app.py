@@ -72,8 +72,6 @@ def amino_acid_counts(seq):
 		if i == 'C':
 			occ_c.append(4)
 
-
-	#x =np.array([1,1,1,3,3,5,5,4,4])
 	plt.hist(occ_a, bins=5, orientation='horizontal', color='red',label='Adenine')
 	plt.hist(occ_tu, bins=5, orientation='horizontal', color='blue',label='Uracil')
 	plt.hist(occ_g, bins=5, orientation='horizontal', color='yellow', label='Guanine')
